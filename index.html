@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bolero AI PRO</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+    <h1>🎵 Bolero AI PRO</h1>
+
+    <input id="title" placeholder="Tên bài hát..." />
+
+    <textarea id="prompt" placeholder="Nhập nội dung: tình yêu, chia ly, mưa, ký ức..."></textarea>
+
+    <div class="buttons">
+        <button onclick="generateSong()">🎼 Tạo bài hát</button>
+        <button onclick="speakSong()">🎤 Nghe thử</button>
+        <button onclick="downloadSong()">💾 Tải về</button>
+    </div>
+
+    <pre id="result"></pre>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
