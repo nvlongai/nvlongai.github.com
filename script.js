@@ -1,30 +1,12 @@
-let currentSong = "";
+let lyrics = "";
+let audioUrl = "";
 
-// 🎼 Tạo bài hát (Demo hoặc AI thật)
-async function generateSong() {
+// ✍️ Tạo lời bằng AI
+async function generateLyrics() {
     const title = document.getElementById("title").value;
     const prompt = document.getElementById("prompt").value;
 
-    // 👉 DEMO (chạy ngay nếu chưa có API)
-    if (!window.USE_REAL_AI) {
-        currentSong = `
-🎵 ${title || "Bài Bolero"}
-
-Chiều mưa rơi nhớ bóng em xưa
-Con đường cũ vẫn chưa phai mờ
-Tình yêu ngày đó như mơ
-Giờ đây tan vỡ bơ vơ...
-
-💔 Điệp khúc:
-Em đi để lại tim đau
-Mưa rơi ướt cả đêm thâu...
-`;
-        document.getElementById("result").innerText = currentSong;
-        return;
-    }
-
-    // 👉 AI thật (OpenAI API)
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -35,30 +17,39 @@ Mưa rơi ướt cả đêm thâu...
             messages: [
                 {
                     role: "user",
-                    content: `Viết bài hát Bolero cực xúc động. Tiêu đề: ${title}. Nội dung: ${prompt}`
+                    content: `Viết bài Bolero cực xúc động. Tiêu đề: ${title}. Nội dung: ${prompt}`
                 }
             ]
         })
     });
 
-    const data = await response.json();
-    currentSong = data.choices[0].message.content;
-    document.getElementById("result").innerText = currentSong;
+    const data = await res.json();
+    lyrics = data.choices[0].message.content;
+
+    document.getElementById("lyrics").innerText = lyrics;
 }
 
-// 🎤 Đọc giọng (Text-to-Speech)
-function speakSong() {
-    const speech = new SpeechSynthesisUtterance(currentSong);
-    speech.lang = "vi-VN";
-    speech.rate = 0.9;
-    speech.pitch = 1;
+// 🎼 Tạo nhạc (demo dùng file mẫu)
+async function generateMusic() {
 
-    speechSynthesis.speak(speech);
+    // ⚠️ GitHub không gọi trực tiếp Suno → cần server
+    // 👉 Tạm dùng demo audio
+
+    audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
+    alert("Đã tạo nhạc demo (bản thật cần server)");
 }
 
-// 💾 Tải file .txt
+// ▶️ Phát nhạc
+function playMusic() {
+    const player = document.getElementById("player");
+    player.src = audioUrl;
+    player.play();
+}
+
+// 💾 Tải lời
 function downloadSong() {
-    const blob = new Blob([currentSong], { type: "text/plain" });
+    const blob = new Blob([lyrics], { type: "text/plain" });
     const a = document.createElement("a");
 
     a.href = URL.createObjectURL(blob);
