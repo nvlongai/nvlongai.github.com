@@ -10,7 +10,7 @@ async function generateLyrics() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            //"Authorization": "Bearer YOUR_API_KEY"
+            "Authorization": "Bearer 60097700399,gen-lang-client-0230883437,Gemini API"
         },
         body: JSON.stringify({
             model: "gpt-4o-mini",
