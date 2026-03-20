@@ -4,31 +4,22 @@ let audioUrl = "";
 // ✍️ Tạo lời bằng AI
 async function generateLyrics() {
     const title = document.getElementById("title").value;
-    const prompt = document.getElementById("prompt").value;
 
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer 60097700399,gen-lang-client-0230883437,Gemini API"
-        },
-        body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [
-                {
-                    role: "user",
-                    content: `Viết bài Bolero cực xúc động. Tiêu đề: ${title}. Nội dung: ${prompt}`
-                }
-            ]
-        })
-    });
+    lyrics = `
+🎵 ${title || "Bài Bolero"}
 
-    const data = await res.json();
-    lyrics = data.choices[0].message.content;
+Chiều mưa rơi nhớ em
+Con đường xưa êm đềm
+Tình ta nay tan biến
+Chỉ còn lại nỗi buồn...
+
+💔 Điệp khúc:
+Em đi quên hết câu thề
+Để anh ôm nỗi tái tê...
+    `;
 
     document.getElementById("lyrics").innerText = lyrics;
 }
-
 // 🎼 Tạo nhạc (demo dùng file mẫu)
 async function generateMusic() {
 
