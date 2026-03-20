@@ -2,26 +2,28 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Bolero AI PRO</title>
+<title>Bolero AI SUPER</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="app">
-    <h1>🎵 Bolero AI PRO</h1>
+    <h1>🎵 Bolero AI SUPER</h1>
 
     <input id="title" placeholder="Tên bài hát..." />
-
-    <textarea id="prompt" placeholder="Nhập nội dung: tình yêu, chia ly, mưa, ký ức..."></textarea>
+    <textarea id="prompt" placeholder="Ví dụ: chia tay, mưa, nhớ người yêu..."></textarea>
 
     <div class="buttons">
-        <button onclick="generateSong()">🎼 Tạo bài hát</button>
-        <button onclick="speakSong()">🎤 Nghe thử</button>
-        <button onclick="downloadSong()">💾 Tải về</button>
+        <button onclick="generateLyrics()">✍️ Tạo lời</button>
+        <button onclick="generateMusic()">🎼 Tạo nhạc</button>
+        <button onclick="playMusic()">▶️ Phát nhạc</button>
+        <button onclick="downloadSong()">💾 Tải</button>
     </div>
 
-    <pre id="result"></pre>
+    <pre id="lyrics"></pre>
+
+    <audio id="player" controls></audio>
 </div>
 
 <script src="script.js"></script>
