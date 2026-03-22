@@ -1,5 +1,8 @@
-async function generateFullSong() {
-    function generateLyrics() {
+// 👉 biến global
+let audioUrl = "";
+
+// 🔥 TẠO LỜI
+window.generateLyrics = function () {
     const title = document.getElementById("title").value || "Chuyện tình buồn";
     const prompt = document.getElementById("prompt").value || "chia ly";
 
@@ -30,36 +33,37 @@ Mất em anh biết về đâu...
 `;
 
     document.getElementById("lyrics").innerText = lyrics;
-}
+};
 
-    // 👉 gọi backend lấy lời
-    const res = await fetch("https://bolero-ai-backend.vercel.app/api/generate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ title, prompt })
-    });
+// 🎼 TẠO NHẠC (demo)
+window.generateMusic = function () {
+    audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+    alert("🎼 Đã tạo nhạc demo");
+};
 
-    const data = await res.json();
+// 🎤 FULL AI (đơn giản)
+window.generateFullSong = function () {
+    generateLyrics();
+    generateMusic();
+    alert("🎤 Đã tạo bài hát FULL!");
+};
 
-    const lyrics = data.lyrics;
-    document.getElementById("lyrics").innerText = lyrics;
+// ▶️ PHÁT NHẠC
+window.playMusic = function () {
+    const player = document.getElementById("player");
+    player.src = audioUrl;
+    player.play();
+};
 
-    // 👉 tạo giọng đọc
-    const speech = new SpeechSynthesisUtterance(lyrics);
-    speech.lang = "vi-VN";
-    speech.rate = 0.9;
+// 💾 TẢI
+window.downloadSong = function () {
+    if (!audioUrl) {
+        alert("Chưa có nhạc!");
+        return;
+    }
 
-    // 👉 phát beat nền
-    const beat = new Audio("bolero-beat.mp3");
-    beat.loop = true;
-    beat.volume = 0.4;
-
-    beat.play();
-
-    // 👉 hát (giả lập)
-    speechSynthesis.speak(speech);
-
-    alert("🎤 Đang hát Bolero AI...");
-}
+    const a = document.createElement("a");
+    a.href = audioUrl;
+    a.download = "bolero.mp3";
+    a.click();
+};
