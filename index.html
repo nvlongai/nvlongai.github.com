@@ -13,6 +13,30 @@
 
     <input id="title" placeholder="Tên bài hát..." />
     <textarea id="prompt" placeholder="Ví dụ: chia tay, mưa, nhớ người yêu..."></textarea>
+    <div class="controls">
+
+    <label>🎵 Style:</label>
+    <select id="style">
+        <option value="bolero">Bolero truyền thống</option>
+        <option value="nhacvang">Nhạc vàng xưa</option>
+        <option value="modern">Bolero hiện đại</option>
+    </select>
+
+    <label>🎤 Giọng hát:</label>
+    <select id="voice">
+        <option value="male">Nam trầm (Chế Linh style)</option>
+        <option value="male2">Nam ấm (Mạnh Quỳnh style)</option>
+        <option value="female">Nữ nhẹ nhàng</option>
+    </select>
+
+    <label>🎧 Cảm xúc:</label>
+    <select id="mood">
+        <option value="sad">Buồn sâu lắng</option>
+        <option value="nostalgic">Hoài niệm</option>
+        <option value="romantic">Lãng mạn</option>
+    </select>
+
+</div>
 
     <div class="buttons">
         <button onclick="generateLyrics()">✍️ Tạo lời</button>
