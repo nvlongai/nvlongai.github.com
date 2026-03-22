@@ -10,72 +10,61 @@ window.generateLyrics = function () {
     const k2 = keywords[1] || "mưa";
     const k3 = keywords[2] || "nỗi nhớ";
 
-    // 🎲 RANDOM helper
     function pick(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // 🎵 CÂU NHẠC VÀNG (RANDOM)
+    // 🎵 STYLE (QUAN TRỌNG)
+    const styles = [
+        "Vietnamese Bolero, slow tempo, emotional male vocal, sad romantic",
+        "Bolero trữ tình, nhạc vàng xưa, giọng nam ấm, cảm xúc sâu lắng",
+        "Vietnamese nostalgic bolero, guitar + accordion, romantic sadness",
+        "Bolero style 90 BPM, male singer, emotional and heartbreaking"
+    ];
+
+    const style = pick(styles);
+
     const verse1 = [
-        `Ngày xưa ta bước chung đường`,
-        `Chiều xưa mưa rơi lối nhỏ`,
-        `Con đường quen bóng em về`,
-        `Hoàng hôn buông xuống êm đềm`
-    ];
-
-    const verse2 = [
-        `Mà giờ đây chỉ còn mình anh`,
-        `Mà giờ em đã xa thật rồi`,
-        `Chỉ còn anh với đêm dài`,
-        `Để lại đây bao nỗi sầu`
-    ];
-
-    const sadLines = [
-        `Nghe tim nhói buốt từng đêm`,
-        `Lòng anh đau như xé tim`,
-        `Giọt lệ rơi ướt bờ mi`,
-        `Tình tan theo cơn ${k2} rơi`
+        "Chiều buồn lặng lẽ bên hiên",
+        "Con đường xưa phủ mưa rơi",
+        "Hoàng hôn buông xuống chơi vơi",
+        "Lối cũ giờ vắng bóng em"
     ];
 
     const chorus1 = [
-        `Em ơi sao nỡ quên câu thề`,
-        `Sao em đành lòng quên lối về`,
-        `Vì sao em nỡ quay lưng đi`,
-        `Người ơi sao đành xa cách anh`
+        "Em ơi sao nỡ quên câu thề",
+        "Sao em đành lòng quay bước đi",
+        "Người ơi sao nỡ xa cách anh",
+        "Tình ơi sao nỡ tan vỡ nhanh"
     ];
 
     const chorus2 = [
-        `Để anh ôm trọn nỗi ê chề`,
-        `Để tim anh đau đến tái tê`,
-        `Để lại đây bao nhiêu đắng cay`,
-        `Để anh cô đơn giữa đêm dài`
-    ];
-
-    const ending = [
-        `Mưa vẫn rơi ngoài hiên`,
-        `Đêm nay anh không ngủ`,
-        `Con tim anh lặng câm`,
-        `Em giờ nơi chốn nào`
+        "Để anh ôm trọn nỗi ê chề",
+        "Để tim anh đau đến tái tê",
+        "Để lại đây bao nhiêu đắng cay",
+        "Để anh cô đơn giữa đêm dài"
     ];
 
     const lyrics = `
+🎧 STYLE:
+${style}
+
 🎵 ${title}
 
 [Intro]
-Chiều buồn lặng lẽ bên hiên
-Cơn ${k2} rơi nhẹ gợi thêm ưu phiền...
+${pick(verse1)}
+Cơn ${k2} rơi nhẹ mang theo nỗi buồn...
 
 [Verse 1]
 ${pick(verse1)}
-${pick(verse2)}
-${pick(sadLines)}
-Bóng hình em dần xa khuất...
+${pick(verse1)}
+Nhớ về ${k3} ngày xưa...
 
 [Verse 2]
-Kỷ niệm xưa đã phai màu
 Chuyện ${k1} khiến lòng anh đau
-${pick(sadLines)}
-Giữa đêm dài nghe xót xa...
+Kỷ niệm xưa giờ phai mau
+Giọt lệ rơi trong đêm thâu
+Nghe lòng thêm xót xa...
 
 💔 [Chorus]
 ${pick(chorus1)}
@@ -89,16 +78,9 @@ ${pick(chorus2)}
 Con tim anh vẫn không quên
 Dù em đã xa thật rồi...
 
-[Bridge]
-Nếu một ngày em quay trở lại
-Anh vẫn chờ dù biết sai
-Tình này dẫu có nhạt phai
-Anh vẫn yêu em mãi...
-
 [Kết]
-${pick(ending)}
-${pick(sadLines)}
-Mất em anh biết về đâu...
+Cơn ${k2} vẫn rơi ngoài hiên
+Mà em đã xa anh thật rồi...
 `;
 
     document.getElementById("lyrics").innerText = lyrics;
