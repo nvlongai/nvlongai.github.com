@@ -3,105 +3,58 @@ let audioUrl = "";
 // 🎵 TẠO LỜI BOLERO PRO
 window.generateLyrics = function () {
     const title = document.getElementById("title").value || "Chuyện tình buồn";
-    let prompt = document.getElementById("prompt").value || "chia tay, mưa, nhớ";
+    let prompt = document.getElementById("prompt").value || "chia tay trong mưa, nhớ người yêu";
 
     const style = document.getElementById("style").value;
     const voice = document.getElementById("voice").value;
     const mood = document.getElementById("mood").value;
 
-    const keywords = prompt.split(",").map(k => k.trim());
-    const k1 = keywords[0] || "chia ly";
-    const k2 = keywords[1] || "mưa";
-    const k3 = keywords[2] || "nỗi nhớ";
+    // 🎲 random helper
+    const rand = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
-    function pick(arr) {
-        return arr[Math.floor(Math.random() * arr.length)];
+    // 👉 TÁCH Ý
+    const ideas = prompt.split(",").map(x => x.trim());
+
+    function randomWord(base) {
+        const variants = [
+            base,
+            "nỗi " + base,
+            base + " xưa",
+            base + " trong tim",
+            "kỷ niệm " + base
+        ];
+        return variants[rand(0, variants.length)];
     }
 
-    // 🎧 MOOD → quyết định lời
-    let verse, chorus1, chorus2;
+    // 🎧 MOOD → văn phong
+    function buildLine() {
+        const subjects = ["anh", "em", "ta", "con tim"];
+        const verbs = ["nhớ", "quên", "đợi", "tìm", "mơ"];
+        const emotions = ["đau", "buồn", "xót xa", "lụi tàn", "vỡ tan"];
 
-    if (mood === "sad") {
-        verse = [
-            "Chiều buồn lặng lẽ bên hiên",
-            "Mưa rơi ướt lạnh con tim",
-            "Đêm về nghe lòng tái tê",
-            "Lối xưa giờ vắng bóng em"
-        ];
+        let s = subjects[rand(0, subjects.length)];
+        let v = verbs[rand(0, verbs.length)];
+        let e = emotions[rand(0, emotions.length)];
 
-        chorus1 = [
-            "Em ơi sao nỡ quên câu thề",
-            "Sao em đành lòng rời xa anh",
-            "Người ơi sao nỡ quay bước đi"
-        ];
-
-        chorus2 = [
-            "Để anh ôm trọn nỗi ê chề",
-            "Để tim anh đau đến tái tê",
-            "Để lại đây bao nhiêu đắng cay"
-        ];
-
-    } else if (mood === "nostalgic") {
-        verse = [
-            "Con đường xưa vẫn còn đó",
-            "Kỷ niệm xưa vẫn chưa phai",
-            "Ngày nào ta bước bên nhau",
-            "Giờ chỉ còn là giấc mơ"
-        ];
-
-        chorus1 = [
-            "Ngày xưa ta đã yêu thật nhiều",
-            "Kỷ niệm xưa vẫn còn trong tim",
-            "Bao nhiêu yêu dấu không phai"
-        ];
-
-        chorus2 = [
-            "Giờ đây anh vẫn còn nhớ em",
-            "Thời gian không xóa được đâu",
-            "Một thời ta đã có nhau"
-        ];
-
-    } else {
-        verse = [
-            "Ánh mắt em khiến anh say",
-            "Tình yêu như cơn gió bay",
-            "Tim anh rung động mỗi ngày",
-            "Vì em anh biết yêu rồi"
-        ];
-
-        chorus1 = [
-            "Anh yêu em hơn cả chính mình",
-            "Trái tim anh chỉ có em thôi",
-            "Tình ta như giấc mơ đẹp"
-        ];
-
-        chorus2 = [
-            "Bên nhau ta sẽ không rời xa",
-            "Dẫu cho giông tố phong ba",
-            "Tình ta mãi mãi không phai"
-        ];
+        if (mood === "sad") {
+            return `${s} ${v} trong ${e}`;
+        }
+        if (mood === "nostalgic") {
+            return `${s} vẫn ${v} những ngày xưa`;
+        }
+        return `${s} ${v} một tình yêu dịu dàng`;
     }
 
-    // 🎵 STYLE → cách viết
-    let intro;
+    // 🎵 STYLE → mở đầu
+    let intro = "";
+    if (style === "nhacvang") intro = "Ngày xưa ấy đã xa thật rồi...";
+    else if (style === "modern") intro = "Một chiều buồn chill giữa phố...";
+    else intro = "Chiều buông lối cũ mưa rơi...";
 
-    if (style === "nhacvang") {
-        intro = "Dòng đời trôi giữa cơn mê...";
-    } else if (style === "modern") {
-        intro = "Một chiều chill buồn trong tim...";
-    } else {
-        intro = "Chiều buông lối cũ mưa rơi...";
-    }
+    // 🎤 VOICE → xưng hô
+    const x = (voice === "female") ? "anh" : "em";
 
-    // 🎤 VOICE → cách xưng hô
-    let xungHo;
-
-    if (voice === "female") {
-        xungHo = "anh";
-    } else {
-        xungHo = "em";
-    }
-
+    // 👉 TẠO BÀI HÁT
     const lyrics = `
 🎵 ${title}
 
@@ -109,28 +62,36 @@ window.generateLyrics = function () {
 ${intro}
 
 [Verse 1]
-${pick(verse)}
-${pick(verse)}
-Nhớ về ${xungHo} ngày xưa...
+${buildLine()}
+${buildLine()}
+${buildLine()}
+Bóng ${x} giờ xa khuất...
 
 [Verse 2]
-Chuyện ${k1} khiến lòng đau
-Cơn ${k2} rơi càng thêm sầu
-${pick(verse)}
+${buildLine()}
+${buildLine()}
+${buildLine()}
+Ký ức vẫn chưa phai...
 
 💔 [Chorus]
-${pick(chorus1)}
-${pick(chorus2)}
-Tình yêu như giấc mộng mê...
+${buildLine()}
+${buildLine()}
+Tình yêu như giấc mộng
+Tan rồi giữa cuộc đời...
 
 💔 [Cao trào]
-${pick(chorus1)}
-${pick(chorus2)}
-Con tim vẫn chưa quên...
+${buildLine()}
+${buildLine()}
+Dù ${x} đã xa thật rồi...
+
+[Bridge]
+Nếu một ngày quay lại
+${buildLine()}
+${buildLine()}
 
 [Kết]
-${pick(verse)}
-Mất ${xungHo} anh biết về đâu...
+${buildLine()}
+Mất ${x} anh biết về đâu...
 `;
 
     document.getElementById("lyrics").innerText = lyrics;
