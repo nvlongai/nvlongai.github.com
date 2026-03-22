@@ -5,6 +5,10 @@ window.generateLyrics = function () {
     const title = document.getElementById("title").value || "Chuyện tình buồn";
     let prompt = document.getElementById("prompt").value || "chia tay, mưa, nhớ";
 
+    const styleSelect = document.getElementById("style").value;
+    const voiceSelect = document.getElementById("voice").value;
+    const moodSelect = document.getElementById("mood").value;
+
     const keywords = prompt.split(",").map(k => k.trim());
     const k1 = keywords[0] || "chia ly";
     const k2 = keywords[1] || "mưa";
@@ -14,73 +18,90 @@ window.generateLyrics = function () {
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // 🎵 STYLE (QUAN TRỌNG)
-    const styles = [
-        "Vietnamese Bolero, slow tempo, emotional male vocal, sad romantic",
-        "Bolero trữ tình, nhạc vàng xưa, giọng nam ấm, cảm xúc sâu lắng",
-        "Vietnamese nostalgic bolero, guitar + accordion, romantic sadness",
-        "Bolero style 90 BPM, male singer, emotional and heartbreaking"
-    ];
+    // 🎵 STYLE TEXT
+    let styleText = "";
 
-    const style = pick(styles);
+    if (styleSelect === "bolero") {
+        styleText = "Vietnamese Bolero, slow tempo, guitar + accordion";
+    } else if (styleSelect === "nhacvang") {
+        styleText = "Nhạc vàng xưa, bolero cổ điển, âm thanh analog";
+    } else {
+        styleText = "Modern Bolero, soft piano + chill beat";
+    }
 
-    const verse1 = [
+    // 🎤 VOICE
+    let voiceText = "";
+
+    if (voiceSelect === "male") {
+        voiceText = "male deep emotional vocal, giống Chế Linh";
+    } else if (voiceSelect === "male2") {
+        voiceText = "male warm vocal, giống Mạnh Quỳnh";
+    } else {
+        voiceText = "female soft emotional vocal";
+    }
+
+    // 🎧 MOOD
+    let moodText = "";
+
+    if (moodSelect === "sad") {
+        moodText = "sad, heartbreaking";
+    } else if (moodSelect === "nostalgic") {
+        moodText = "nostalgic, memory, old love";
+    } else {
+        moodText = "romantic, emotional";
+    }
+
+    const verse = [
         "Chiều buồn lặng lẽ bên hiên",
         "Con đường xưa phủ mưa rơi",
-        "Hoàng hôn buông xuống chơi vơi",
-        "Lối cũ giờ vắng bóng em"
+        "Lối cũ giờ vắng bóng em",
+        "Hoàng hôn buông xuống chơi vơi"
     ];
 
     const chorus1 = [
         "Em ơi sao nỡ quên câu thề",
         "Sao em đành lòng quay bước đi",
-        "Người ơi sao nỡ xa cách anh",
-        "Tình ơi sao nỡ tan vỡ nhanh"
+        "Người ơi sao nỡ xa cách anh"
     ];
 
     const chorus2 = [
         "Để anh ôm trọn nỗi ê chề",
         "Để tim anh đau đến tái tê",
-        "Để lại đây bao nhiêu đắng cay",
-        "Để anh cô đơn giữa đêm dài"
+        "Để lại đây bao nhiêu đắng cay"
     ];
 
     const lyrics = `
 🎧 STYLE:
-${style}
+${styleText}, ${voiceText}, ${moodText}
 
 🎵 ${title}
 
 [Intro]
-${pick(verse1)}
+${pick(verse)}
 Cơn ${k2} rơi nhẹ mang theo nỗi buồn...
 
 [Verse 1]
-${pick(verse1)}
-${pick(verse1)}
+${pick(verse)}
+${pick(verse)}
 Nhớ về ${k3} ngày xưa...
 
 [Verse 2]
 Chuyện ${k1} khiến lòng anh đau
 Kỷ niệm xưa giờ phai mau
-Giọt lệ rơi trong đêm thâu
-Nghe lòng thêm xót xa...
+Giọt lệ rơi trong đêm thâu...
 
 💔 [Chorus]
 ${pick(chorus1)}
 ${pick(chorus2)}
-Tình yêu như giấc mộng mê
-Tan rồi chỉ còn u mê...
+Tình yêu như giấc mộng mê...
 
 💔 [Chorus - Cao trào]
 ${pick(chorus1)}
 ${pick(chorus2)}
-Con tim anh vẫn không quên
-Dù em đã xa thật rồi...
+Con tim anh vẫn không quên...
 
 [Kết]
-Cơn ${k2} vẫn rơi ngoài hiên
-Mà em đã xa anh thật rồi...
+Cơn ${k2} vẫn rơi ngoài hiên...
 `;
 
     document.getElementById("lyrics").innerText = lyrics;
