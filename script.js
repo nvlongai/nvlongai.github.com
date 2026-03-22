@@ -1,49 +1,35 @@
-let lyrics = "";
-let audioUrl = "";
-
-// ✍️ Tạo lời bằng AI
-async function generateLyrics() {
+async function generateFullSong() {
     const title = document.getElementById("title").value;
+    const prompt = document.getElementById("prompt").value;
 
-    lyrics = `
-🎵 ${title || "Bài Bolero"}
+    // 👉 gọi backend lấy lời
+    const res = await fetch("https://bolero-ai-backend.vercel.app/api/generate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title, prompt })
+    });
 
-Chiều mưa rơi nhớ em
-Con đường xưa êm đềm
-Tình ta nay tan biến
-Chỉ còn lại nỗi buồn...
+    const data = await res.json();
 
-💔 Điệp khúc:
-Em đi quên hết câu thề
-Để anh ôm nỗi tái tê...
-    `;
-
+    const lyrics = data.lyrics;
     document.getElementById("lyrics").innerText = lyrics;
-}
-// 🎼 Tạo nhạc (demo dùng file mẫu)
-async function generateMusic() {
 
-    // ⚠️ GitHub không gọi trực tiếp Suno → cần server
-    // 👉 Tạm dùng demo audio
+    // 👉 tạo giọng đọc
+    const speech = new SpeechSynthesisUtterance(lyrics);
+    speech.lang = "vi-VN";
+    speech.rate = 0.9;
 
-    audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+    // 👉 phát beat nền
+    const beat = new Audio("bolero-beat.mp3");
+    beat.loop = true;
+    beat.volume = 0.4;
 
-    alert("Đã tạo nhạc demo (bản thật cần server)");
-}
+    beat.play();
 
-// ▶️ Phát nhạc
-function playMusic() {
-    const player = document.getElementById("player");
-    player.src = audioUrl;
-    player.play();
-}
+    // 👉 hát (giả lập)
+    speechSynthesis.speak(speech);
 
-// 💾 Tải lời
-function downloadSong() {
-    const blob = new Blob([lyrics], { type: "text/plain" });
-    const a = document.createElement("a");
-
-    a.href = URL.createObjectURL(blob);
-    a.download = "bolero.txt";
-    a.click();
+    alert("🎤 Đang hát Bolero AI...");
 }
